@@ -24,12 +24,13 @@
   /* ---------- Bilder (URLs zentral in js/images.js) ---------- */
   function imgUrl(src, w) {
     if (/images\.unsplash\.com/.test(src)) return src.split('?')[0] + '?auto=format&fit=crop&w=' + w + '&q=78';
+    if (/images\.pexels\.com/.test(src)) return src.split('?')[0] + '?auto=compress&cs=tinysrgb&w=' + w;
     return src;
   }
   $$('img[data-img]').forEach(function (img) {
     var src = IMAGES[img.getAttribute('data-img')];
     if (!src) return;
-    if (/images\.unsplash\.com/.test(src)) {
+    if (/images\.(unsplash|pexels)\.com/.test(src)) {
       img.srcset = [640, 1024, 1600, 2400].map(function (w) { return imgUrl(src, w) + ' ' + w + 'w'; }).join(', ');
       img.sizes = img.closest('.contact-circle') ? '(min-width: 1000px) 40vw, 90vw' : '100vw';
       img.src = imgUrl(src, 1600);
